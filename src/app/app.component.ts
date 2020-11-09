@@ -15,6 +15,12 @@ export class AppComponent {
 
   constructor(private ps: PollService) {}
 
+  ngOnInit() {
+    this.ps.onEvent('PollCreated').subscribe(() => {
+      this.polls = this.ps.getPolls();
+    });
+  }
+
   setActivePoll(poll) {
     this.activePoll = null;
 
@@ -28,6 +34,6 @@ export class AppComponent {
   }
 
   handlePollVote(pollVoted: PollVote) {
-    this.ps.vote(pollVoted.id, pollVoted.vote );
+    this.ps.vote(pollVoted.id, pollVoted.vote);
   }
 }
